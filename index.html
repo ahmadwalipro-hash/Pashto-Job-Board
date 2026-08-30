@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ps" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>کارموندنه - د کار او پروژو موندلو سمارټ پلېټ فارم</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- هیدر برخه له ستاسو د نوم د بکس سره -->
+    <header>
+        <div class="max-width-container header-flex">
+            <div class="logo-area">
+                <div class="logo-box">AS</div>
+                <div class="logo-text">شیرزاد کارموندنه</div>
+                <!-- په لاندې ځای کې د 'ستاسو نوم' پر ځای خپل اصلي نوم ولیکئ -->
+                
+            </div>
+            <button onclick="openModal()" class="btn-primary">+ د کار/پروژې خبرتیا</button>
+        </div>
+    </header>
+
+    <!-- اصلي منځپانګه -->
+    <main class="max-width-container" style="flex: 1;">
+        
+        <section class="filter-section">
+            <input type="text" id="search-input" placeholder="د دندې سرلیک، مهارت یا د شرکت نوم...">
+            <select id="location-filter">
+                <option value="all">ټول ځایونه (هرځای)</option>
+                <option value="کابل">کابل</option>
+                <option value="ننګرهار">ننګرهار</option>
+                <option value="کندهار">کندهار</option>
+                <option value="هرات">هرات</option>
+                <option value="آنلاین">آنلاین / له لرې لارې</option>
+            </select>
+            <select id="type-filter">
+                <option value="all">د کار ټول ډولونه</option>
+                <option value="پروژه يي">پروژه يي (Freelance)</option>
+                <option value="بشپړ وخت">بشپړ وخت</option>
+                <option value="نیمه وخت">نیمه وخت</option>
+            </select>
+        </section>
+
+        <section>
+            <h3 class="jobs-list-title">📍 د وروستیو دندو او پروژو لیست</h3>
+            <div id="jobs-container"></div>
+        </section>
+    </main>
+
+    <!-- د پاپ اپ ماډل -->
+    <div id="job-modal" class="modal-overlay">
+        <div class="modal-box">
+            <h3 style="margin-bottom: 18px; color: #38bdf8; font-size: 18px;">نوې پروژه یا دنده خپره کړئ</h3>
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <input type="text" id="job-title" placeholder="د کار / پروژې سرلیک">
+                <input type="text" id="job-company" placeholder="د شرکت یا ستاسو نوم">
+                
+                <div class="modal-grid">
+                    <select id="job-location">
+                        <option value="کابل">کابل</option>
+                        <option value="ننګرهار">ننګرهار</option>
+                        <option value="کندهار">کندهار</option>
+                        <option value="هرات">هرات</option>
+                        <option value="آنلاین">آنلاین / له لرې لارې</option>
+                    </select>
+                    <select id="job-type">
+                        <option value="پروژه يي">پروژه يي (Freelance)</option>
+                        <option value="بشپړ وخت">بشپړ وخت</option>
+                        <option value="نیمه وخت">نیمه وخت</option>
+                    </select>
+                </div>
+
+                <div class="modal-grid">
+                    <input type="text" id="job-salary" placeholder="بودیجه یا میاشتنی معاش">
+                    <input type="text" id="job-contact" placeholder="واټساپ شمیره یا ایمیل" style="text-align: left;" dir="ltr">
+                </div>
+
+                <textarea id="job-desc" rows="3" placeholder="د کار شرایط، مهارتونه او لنډ تفصیل ولیکئ..."></textarea>
+            </div>
+            
+            <div class="modal-buttons">
+                <button onclick="closeModal()" class="btn-secondary">بندول</button>
+                <button onclick="saveJob()" class="btn-primary">خپرول اعلان</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- مډرن فوټر له ستاسو د نوم د حقونو سره -->
+    <footer>
+        <p>© 2026 ټول حقونه د ستاسو نوم سره خوندي دي۔ د کارموندنې مډرن پلېټ فارم۔</p>
+    </footer>
+
+    <script>
+        const initialJobs = [
+            { id: 1, title: "د ویب پاڼې پښتو ژباړې پروژه", company: "روښان ټیک", location: "آنلاین", type: "پروژه يي", salary: "۸,۰۰۰ AFN", contact: "info@roshan.af", desc: "موږ ته د یوې تعلیمي ویب پاڼې د مقالو ژباړلو لپاره تجربه کار ژباړونکي ته اړتیا لرو۔" },
+            { id: 2, title: "د ګرافیک ډیزاینر او ایډیټر اړتیا", company: "کابل مېډیا ګروپ", location: "کابل", type: "بشپړ وخت", salary: "۱۵,۰۰۰ AFN", contact: "0799123456", desc: "په کابل کې د اعلاناتو او برانډنګ د لوګو ډیزاین لپاره په فیګما یا فوټوشاپ کې مسلکي کس غواړو۔" }
+        ];
+
+        let jobs = JSON.parse(localStorage.getItem('kasbgar_split_jobs')) || initialJobs;
+
+        const jobsContainer = document.getElementById('jobs-container');
+        const searchInput = document.getElementById('search-input');
+        const locationFilter = document.getElementById('location-filter');
+        const typeFilter = document.getElementById('type-filter');
+
+        function openModal() { document.getElementById('job-modal').style.display = 'flex'; }
+        function closeModal() { document.getElementById('job-modal').style.display = 'none'; }
+
+        function renderJobs() {
+            jobsContainer.innerHTML = '';
+            const search = searchInput.value.toLowerCase().trim();
+            const loc = locationFilter.value;
+            const type = typeFilter.value;
+
+            const filtered = jobs.filter(j => {
+                const matchesSearch = j.title.toLowerCase().includes(search) || j.desc.toLowerCase().includes(search);
+                const matchesLocation = loc === 'all' || j.location === loc;
+                const matchesType = type === 'all' || j.type === type;
+                return matchesSearch && matchesLocation && matchesType;
+            });
+
+            if(filtered.length === 0) {
+                jobsContainer.innerHTML = '<p style="text-align:center; color:#475569; padding: 32px; font-size: 14px;">هیڅ پروژه یا کار ونه موندل شو.</p>';
+                return;
+            }
+
+            filtered.forEach(job => {
+                const card = document.createElement('div');
+                card.className = "job-card";
+                card.innerHTML = `
+                    <div style="flex: 1;">
+                        <div>
+                            <span class="badge">${job.type}</span>
+                            <span class="badge badge-loc">📍 ${job.location}</span>
+                        </div>
+                        <h4 class="job-title">${job.title}</h4>
+                        <p class="job-desc">${job.desc}</p>
+                        <p style="font-size:11px; color:#64748b; margin-top:8px;">اعلان کونکی: <b>${job.company}</b> | اړیکه: <span dir="ltr">${job.contact}</span></p>
+                    </div>
+                    <div style="text-align: left; display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
+                        <div class="salary-text">${job.salary}</div>
+                        <button onclick="deleteJob(${job.id})" class="btn-delete">حذف کول</button>
+                    </div>
+                `;
+                jobsContainer.appendChild(card);
+            });
+        }
+
+        function saveJob() {
+            const title = document.getElementById('job-title').value.trim();
+            const company = document.getElementById('job-company').value.trim();
+            const location = document.getElementById('job-location').value;
+            const type = document.getElementById('job-type').value;
+            const salary = document.getElementById('job-salary').value.trim();
+            const contact = document.getElementById('job-contact').value.trim();
+            const desc = document.getElementById('job-desc').value.trim();
+
+            if(!title || !company || !salary || !contact || !desc) {
+                alert('مهرباني وکړئ ټول معلومات ډک کړئ!');
+                return;
+            }
+
+            jobs.unshift({ id: Date.now(), title, company, location, type, salary, contact, desc });
+            localStorage.setItem('kasbgar_split_jobs', JSON.stringify(jobs));
+            renderJobs();
+            closeModal();
+
+            document.getElementById('job-title').value = '';
+            document.getElementById('job-company').value = '';
+            document.getElementById('job-salary').value = '';
+            document.getElementById('job-contact').value = '';
+            document.getElementById('job-desc').value = '';
+        }
+
+        function deleteJob(id) {
+            if(confirm('ایا یقیني یاست چې دا کار حذف شي؟')) {
+                jobs = jobs.filter(j => j.id !== id);
+                localStorage.setItem('kasbgar_split_jobs', JSON.stringify(jobs));
+                renderJobs();
+            }
+        }
+
+        searchInput.addEventListener('input', renderJobs);
+        locationFilter.addEventListener('change', renderJobs);
+        typeFilter.addEventListener('change', renderJobs);
+
+        renderJobs();
+    </script>
+</body>
+</html>

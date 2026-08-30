@@ -1,0 +1,299 @@
+/* style.css - د کارموندنې د ډیزاین ځانګړی فایل */
+@import url('https://googleapis.com');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+body {
+    background-color: #020617;
+    color: #f1f5f9;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.max-width-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+/* هیدر او د ښیښې اغېزه */
+header {
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    padding: 14px 0;
+    border-bottom: 1px solid #1e293b;
+}
+
+.header-flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-box {
+    width: 38px;
+    height: 38px;
+    background: linear-gradient(135deg, #2563eb, #22d3ee);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.logo-text {
+    font-size: 20px;
+    font-weight: bold;
+    background: linear-gradient(90deg, #38bdf8, #22d3ee);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ستاسو د نوم لوکس بکس په هیدر کې */
+.author-badge {
+    background: rgba(34, 211, 238, 0.1);
+    border: 1px solid rgba(34, 211, 238, 0.2);
+    color: #22d3ee;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+/* لوکس ګریډینټ تڼۍ */
+.btn-primary {
+    background: linear-gradient(90deg, #2563eb, #06b6d4);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 14px rgba(37, 99, 235, 0.15);
+}
+
+.btn-primary:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37, 99, 235, 0.25);
+}
+
+/* د لټون بار او فلټر سیکشن */
+.filter-section {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(30, 41, 59, 0.6);
+    border-radius: 16px;
+    padding: 20px;
+    margin: 24px 0;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px 16px;
+    background: #020617;
+    border: 1px solid #1e293b;
+    color: #f1f5f9;
+    border-radius: 12px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px #2563eb;
+}
+
+/* د پروژو متحرک کارتونه */
+.jobs-list-title {
+    font-size: 14px;
+    color: #94a3b8;
+    margin-bottom: 16px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+}
+
+.job-card {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid #1e293b;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.job-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(59, 130, 246, 0.4);
+    box-shadow: 0 12px 24px -10px rgba(59, 130, 246, 0.15);
+}
+
+.badge {
+    display: inline-block;
+    padding: 3px 10px;
+    font-size: 11px;
+    border-radius: 8px;
+    font-weight: 500;
+    margin-left: 6px;
+    background: rgba(59, 130, 246, 0.1);
+    color: #60a5fa;
+    border: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+.badge-loc {
+    background: rgba(6, 182, 212, 0.1);
+    color: #22d3ee;
+    border: 1px solid rgba(6, 182, 212, 0.15);
+}
+
+.job-title {
+    font-size: 17px;
+    font-weight: 700;
+    color: #f8fafc;
+    margin: 10px 0 6px 0;
+}
+
+.job-desc {
+    font-size: 13px;
+    color: #94a3b8;
+    line-height: 1.6;
+}
+
+.salary-text {
+    color: #34d399;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* د فارم پاپ اپ ماډل */
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(2, 6, 23, 0.8);
+    backdrop-filter: blur(8px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    z-index: 100;
+}
+
+.modal-box {
+    background: #0f172a;
+    border: 1px solid #1e293b;
+    border-radius: 20px;
+    padding: 26px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.modal-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-secondary {
+    background: #1e293b;
+    color: #e2e8f0;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: background 0.2s;
+}
+
+.btn-secondary:hover {
+    background: #334155;
+}
+
+.btn-delete {
+    background: rgba(239, 68, 68, 0.1);
+    color: #f87171;
+    border: none;
+    padding: 6px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s;
+}
+
+.btn-delete:hover {
+    background: #ef4444;
+    color: white;
+}
+
+/* د موبایل لپاره برابرول (Responsive) */
+@media (max-width: 768px) {
+    .filter-section {
+        grid-template-columns: 1fr;
+    }
+    .header-flex {
+        flex-direction: column;
+        text-align: center;
+        gap: 12px;
+    }
+    .job-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    .modal-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    font-size: 12px;
+    color: #64748b;
+    border-top: 1px solid #0f172a;
+    margin-top: auto;
+}
+
+.footer-name {
+    color: #38bdf8;
+    font-weight: bold;
+    text-decoration: none;
+}
